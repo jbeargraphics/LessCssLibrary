@@ -1,0 +1,86 @@
+/*
+ * LessCss Kitten Grid 2.0
+ * (released as part of the jBear LessCss Mixin Library)
+ *
+ * Copyright (c) 2014 Johannes Lehner, jBear Graphics - web&design
+ * License: MIT license (http://www.opensource.org/licenses/mit-license.php)
+ *
+ *   email | email@johannes-lehner.at
+ *     web | http://www.johannes-lehner.at
+ *    like | http://www.facebook.com/jbeargraphics
+ *  follow | https://plus.google.com/113188429852393923452
+ *
+ *     git | https://github.com/johanneslehner/KittenGrid
+ *
+ */
+
+
+/* Base Classes */
+[class^=row] 
+{ 
+	text-align: justify;
+	-ms-text-justify: distribute-all-lines;
+	white-space: nowrap; // BugFix for Chrome
+} 
+
+[class^=row] > * 
+{ 
+	display: inline-block; 
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal; // BugFix for Chrome
+	vertical-align: top;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+// call jBear LessCss Mixin "KittenGrid"
+
+//*** Full Call (setting margin and max. amount of cols)
+.KittenGrid(@margin, @cols) {
+
+	/* Fluid Columns - Fixed Margin */
+	.rows(2, @margin, @cols);
+
+	/* Helper Classes */
+	.columns(1, @cols);
+}
+
+
+//*** Partly Call (setting margin, default col amount: 8)
+.KittenGrid(@margin) {
+	/* Fluid Columns - Fixed Margin */
+	.rows(2, @margin, 8);
+
+	/* Helper Classes */
+	.columns(1, 8);
+}
+
+
+//*** Default Call (without any parameters - default margin: 20px; default col amount: 8)
+.KittenGrid() {
+	/* Fluid Columns - Fixed Margin */
+	.rows(2, 20, 8);
+
+	/* Helper Classes */
+	.columns(1, 8);
+}
+
+
+//* Fluid Columns - Fixed Margin *//
+.rows(@col, @margin, @cols) when (@col <= @cols) {
+	.row@{col}Col { word-spacing: unit( @margin * @col, px); padding-right: unit( @margin * (@col - 1), px); }
+	.row@{col}Col > * { margin-right: unit( (@margin * (@col - 1) * (-1)) - 5, px); }
+	.rows(@col + 1, @margin, @cols);
+}
+.rows(0, @margin, @cols) {}
+
+
+//* Helper Classes *//
+.columns(@col, @cols) when (@col <= @cols) {
+	.col@{col}-@{cols} { width: unit(100 * @col / @cols, %); }
+	.columns(@col + 1, @cols);
+}
+.columns(0, @cols) {}
