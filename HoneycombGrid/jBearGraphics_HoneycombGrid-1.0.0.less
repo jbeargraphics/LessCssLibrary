@@ -1,0 +1,114 @@
+/*
+ * LessCss Honeycomb Grid 1.0
+ * (released as part of the jBear LessCss Mixin Library)
+ *
+ * Copyright (c) 2015 Johannes Lehner, jBear Graphics - web&design
+ * License: MIT license (http://www.opensource.org/licenses/mit-license.php)
+ *
+ *   email | email@johannes-lehner.at
+ *     web | http://www.johannes-lehner.at
+ *    like | http://www.facebook.com/jbeargraphics
+ *  follow | https://plus.google.com/113188429852393923452
+ *
+ *     git | https://github.com/jbeargraphics/LessCssLibrary/HoneycombGrid
+ *
+ *
+ *
+ * At the moment this Grid is a very raw, but full functional version of the honeycomb grid. An updated version will follow soon!
+ *
+ */
+
+
+.jHoneycombGrid(@cols, @margin) {
+  @honeycombCellCols: @cols;
+  @cellMargin: @margin;
+  @cellWidth: (100 - (@cellMargin * @honeycombCellCols)) / (@honeycombCellCols + .5);
+  position:relative;
+  list-style-type:none;
+  width: unit(@cellWidth, %);
+  padding-bottom: unit(@cellWidth * 2 / sqrt(3), %);
+  float:left;
+  overflow:hidden;
+  visibility:hidden;
+
+  -webkit-transform: rotate(-60deg) skewY(30deg);
+  -ms-transform: rotate(-60deg) skewY(30deg);
+  transform: rotate(-60deg) skewY(30deg);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.6);
+  margin: 0 unit(@cellMargin / 2, %);
+
+  &:last-child {
+    margin-bottom: 20px !important;
+  }
+
+  @firstItemSecondRow: @honeycombCellCols + 1;
+  @itemCountSecondRow: @honeycombCellCols * 2;
+  .secondRow(@index) when (@index > 0) {
+    @counter: @honeycombCellCols + @index;
+    &:nth-child(@{itemCountSecondRow}n+@{counter}) {
+      margin-top: unit(0 - (@cellWidth / 5), %);
+      margin-bottom: unit(0 - (@cellWidth / 5), %);
+      .marginLeft(@index);
+
+      -webkit-transform: translateX(50%) rotate(-60deg) skewY(30deg);
+      -ms-transform: translateX(50%) rotate(-60deg) skewY(30deg);
+      transform: translateX(50%) rotate(-60deg) skewY(30deg);
+    }
+    .secondRow(@index - 1);
+  }
+  .secondRow(0) {};
+  .secondRow(@honeycombCellCols);
+
+  .marginLeft(@int) when (@int = 1) {
+    margin-left: unit(@margin, %);
+  }
+}
+
+.jHoneycombGrid(@cols, @margin, @odd) when (@odd = true) {
+  @honeycombCellCols: @cols;
+  @cellMargin: @margin;
+  @cellWidth: (100 - @cellMargin * @honeycombCellCols) / @honeycombCellCols;
+  position:relative;
+  list-style-type:none;
+  width: unit(@cellWidth, %);
+  padding-bottom: unit(@cellWidth * 2 / sqrt(3), %);
+  float:left;
+  overflow:hidden;
+  visibility:hidden;
+
+  -webkit-transform: rotate(-60deg) skewY(30deg);
+  -ms-transform: rotate(-60deg) skewY(30deg);
+  transform: rotate(-60deg) skewY(30deg);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.6);
+  margin: 0 unit(@cellMargin / 2, %);
+
+  &:last-child {
+    margin-bottom: 20px !important;
+  }
+
+  @itemCountSecondRow: @honeycombCellCols * 2 - 1;
+  .secondRow(@index) when (@index > 0) {
+    @i: @honeycombCellCols*2 - 1;
+    @j: @index + @honeycombCellCols;
+    &:nth-child(@{i}n+@{j}) {
+      margin-top: unit(0 - (@cellWidth / 5), %);
+      margin-bottom: unit(0 - (@cellWidth / 5), %);
+      .marginLeft(@index);
+      .marginRight(@i - @j);
+
+      -webkit-transform: translateX(50%) rotate(-60deg) skewY(30deg);
+      -ms-transform: translateX(50%) rotate(-60deg) skewY(30deg);
+      transform: translateX(50%) rotate(-60deg) skewY(30deg);
+    }
+    .secondRow(@index - 1);
+  }
+  .secondRow(0) {};
+  .secondRow(@honeycombCellCols - 1);
+
+  .marginLeft(@int) when (@int = 1) {
+    margin-left: unit(@margin, %);
+  }
+  .marginRight(@int) when (@int = 0) {
+    margin-right: unit(@cellWidth / 2, %);
+  }
+}

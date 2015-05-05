@@ -1,0 +1,118 @@
+/*
+ * LessCss Reset
+ * (released as part of the jBear LessCss Mixin Library)
+ *
+ * Copyright (c) 2015 Johannes Lehner, jBear Graphics - web&design
+ * License: MIT license (http://www.opensource.org/licenses/mit-license.php)
+ *
+ *   email | email@johannes-lehner.at
+ *     web | http://www.johannes-lehner.at
+ *    like | http://www.facebook.com/jbeargraphics
+ *  follow | https://plus.google.com/113188429852393923452
+ *
+ *     git | https://github.com/jbeargraphics/LessCssLibrary/jBearBasicMixins
+ *
+ *
+ * The CSS Reset is a small basic reset. Updates will follow.
+ *
+ */
+html,
+html body {
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+}
+*,
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+label,
+fieldset,
+input,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  vertical-align: baseline;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+fieldset,
+img {
+  border: 0;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+  font-style: normal;
+  font-weight: normal;
+}
+ol,
+ul,
+li {
+  list-style: none;
+}
+caption,
+th {
+  text-align: left;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+:link,
+:visited {
+  text-decoration: none;
+}
+q:before,
+q:after {
+  content: '';
+}
+/* The below restores some sensible defaults */
+strong {
+  font-weight: bold;
+}
+em {
+  font-style: italic;
+}
+a img {
+  border: none;
+}
+sup {
+  vertical-align: super;
+  font-size: 60%;
+}
+sub {
+  vertical-align: sub;
+  font-size: 60%;
+}
