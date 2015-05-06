@@ -16,3 +16,40 @@
  * Mixins coming soon.
  *
  */
+
+
+// Thanks to ScottS @StackOverflow - nice answer to a good question.
+// http://stackoverflow.com/questions/11551313/less-css-pass-mixin-as-a-parameter-to-another-mixin
+.keyframes(@name, @from, @to) {
+  @frames: {
+    from  { @from(); }
+    to    { @to(); }
+  };
+  @pre: -moz-keyframes;
+  @-moz-keyframes @name
+  {
+    @frames();
+  }
+
+  @-webkit-keyframes @name
+  {
+    @frames();
+  }
+
+  @keyframes @name
+  {
+    @frames();
+  }
+}
+
+// HowTo:
+//
+// .keyframes(
+//    your-keyframe,
+//    { property: value; .your-mixin(var); },
+//    { property: value; .your-mixin(some-other-value); }
+// );
+//
+// .your-mixin(@val) {
+//    property: @val;
+// }

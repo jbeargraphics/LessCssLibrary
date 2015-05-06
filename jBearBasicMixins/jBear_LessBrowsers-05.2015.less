@@ -17,6 +17,495 @@
  * I started to create a browserhacksheet based on http://browserhacks.com > might be useful for cross browser hacks
  * (but usage should be avoided if possible)
  *
+ * No Property/Value Hacks are added!
+ *
+ *
+ * How To Use?
+ * Select the BrowserHack that you need, choose a custom Css Selector (Only classes available for now),
+ * write your Style into a dummy class / mixin class, add the file to your project.
+ *
+ * Example:
+ * Selecting Firefox gt2 : @firefox2;
+ * Css Selector: .MySelector;
+ * Style: color: green;
+ * Additional Style: the class ".mixin"
+ *
+ * How To write the Less File:
+ * .mixin {
+ *    background: red;
+ * }
+ * .BrowserSelect(@firefox2, MySelector, { color: green; .mixin } );
+ *
+ * OUTPUT:
+ *
+ * .mixin {
+ *   background: red;
+ * }
+ * body:last-child .MySelector,
+ * x:-moz-any-link {
+ *   color: green;
+ *   background: red;
+ * }
+ *
+ * !!! IMPORTANT: DON'T Forget the curved brackets around the style!!!
+ *
+ * ANY QUESTIONS? CONTACT ME:
+ * TWITTER: @jbeargraphics
+ * FACEBOOK: https://www.facebook.com/jbeargraphics
  */
 
 
+
+// BrowserHack:
+//
+//
+// Android
+@android1: "Chrome*, Safari*, Opera ≥ 14, Android";
+@android2: "Internet Explorer ≥ 9, Safari 4, Android ≥ 2.3";
+// TODO: Implementation
+//
+//
+// Chrome
+@chrome1: @android1;
+@chrome2: "Chrome ≥ 28, Opera ≥ 14";
+@chrome3: "Chrome 22-28, Safari ≥ 7";
+// @media \\0 screen {}
+// TODO: Implementation
+
+@chrome4: "Chrome ≥ 29, Opera ≥ 16";
+//
+//
+// Firefox
+@firefox1: "Firefox 1.5/2";
+@firefox2: "Firefox ≥ 2";
+@firefox3: "Firefox ≥ 3";
+@firefox4: "Firefox ≥ 3.5";
+@firefox5: "Firefox ≥ 6";
+@firefox6: "Firefox ≥ 21";
+@firefox7: "Firefox*";
+@firefox8: "Internet Explorer ≤ 8, Firefox*"; // Comment: Everything but Firefox and Internet Explorer ≤8
+@firefox9: "Firefox ≥ 16";
+@firefox10: "Firefox ≥ 22";
+@firefox11: "Firefox ≥ 24";
+@firefox12: "Firefox ≥ 25";
+@firefox13: "Firefox ≥ 26";
+@firefox14: "Firefox ≥ 27";
+@firefox15: "Firefox ≥ 28";
+@firefox16: "Firefox ≥ 30";
+@firefox17: "Firefox ≥ 3.6";
+@firefox18: "Firefox ≥ 4";
+@firefox19: "Firefox ≥ 8";
+@firefox20: "Firefox ≥ 11";
+@firefox21: "Firefox ≥ 29";
+@firefox22: "Firefox ≥ 3";
+//
+//
+// Internet Explorer
+@ie1: "Internet Explorer ≤ 7";
+@ie2: "Internet Explorer 7";
+@ie3: "Internet Explorer ≤ 7"; // Comment: Everything but Internet Explorer ≤7
+// TODO: Implementation
+
+@ie4: @firefox8; // Comment: Everything but Firefox and Internet Explorer ≤8
+@ie5: "Internet Explorer ≤ 8"; // Comment: Everything but Internet Explorer ≤8
+@ie6: "Internet Explorer ≤ 9"; // Comment: Everything but Internet Explorer ≤9
+@ie7: "Internet Explorer ≥ 10";
+@ie8: "Internet Explorer ≥ 11";
+@ie9: "Internet Explorer ≤ 7";
+// TODO: Implementation
+
+@ie10: "Internet Explorer ≤ 8";
+// TODO: Implementation
+
+@ie11: "Internet Explorer 8";
+// TODO: Implementation
+
+@ie12: @android2;
+// TODO: Implementation
+
+@ie13: "Internet Explorer ≥ 10";
+@ie14: "Internet Explorer*, Safari ≤ 6"; // Comment: Everything but Internet Explorer and Safari ≤6
+//
+//
+// Opera
+@opera1: "Safari 2/3.1, Opera 9.25";
+// TODO: Implementation
+
+@opera2: "Opera ≤ 9.27, Safari 2";
+@opera3: "Opera ≥ 9.5";
+@opera4: "Opera ≤ 11";
+@opera5: @android1;
+@opera6: @chrome2;
+@opera7: "Opera ≥ 12";
+@opera8: @chrome4;
+//
+//
+// Safari
+@safari1: @android1;
+@safari2: Safari 2-3;
+@safari3: @opera1;
+// TODO: Implementation
+
+@safari4: @ie14; // Comment: Everything but Internet Explorer and Safari ≤6
+@safari5: @chrome3;
+// TODO: Implementation
+
+
+
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @android1), (@BrowserSupport = @chrome1), (@BrowserSupport = @opera5), (@BrowserSupport = @safari1) {
+  .@{Selector}:not(*:root) {
+    @Mixin();
+  }
+}
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @android2) {
+//   @media screen and (min-width:0\0) {
+//     .@{Selector} {
+//       @Mixin();
+//     }
+//   }
+// }
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @chrome2), (@BrowserSupport = @opera6) {
+  @supports (-webkit-appearance:none) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @chrome3), (@BrowserSupport = @safari5) {
+//   @media \\0 screen {
+//     .@{Selector} {
+//       @Mixin();
+//     }
+//   }
+// }
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @chrome4), (@BrowserSupport = @opera8) {
+  @media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox1) {
+  body:empty {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox2) {
+  body:last-child .@{Selector}, x:-moz-any-link {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox3) {
+  body:last-child .@{Selector}, x:-moz-any-link, x:default {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox4) {
+  body:not(:-moz-handler-blocked) .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox5) {
+  _::-moz-progress-bar, body:last-child .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox6) {
+  _::-moz-range-track, body:last-child .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox7) {
+  _:-moz-tree-row(hover), .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox8), (@BrowserSupport = @ie4) {
+  _::selection, .@{Selector}:not([attr*='']) {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox9) {
+  @supports (-moz-appearance:meterbar) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox10) {
+  @supports (-moz-appearance:meterbar) and (display:flex) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox11) {
+  @supports (-moz-appearance:meterbar) and (cursor:zoom-in) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox12) {
+  @supports (-moz-appearance:meterbar) and (background-attachment:local) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox13) {
+  @supports (-moz-appearance:meterbar) and (image-orientation:90deg) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox14) {
+  @supports (-moz-appearance:meterbar) and (all:initial) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox15) {
+  @supports (-moz-appearance:meterbar) and (list-style-type:japanese-formal) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox16) {
+  @supports (-moz-appearance:meterbar) and (background-blend-mode:difference,normal) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox17) {
+  @media screen and (-moz-images-in-menus:0) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox18) {
+  @media screen and (min--moz-device-pixel-ratio:0) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox19) {
+  @media all and (min--moz-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+  @media all and (-moz-images-in-menus:0) and (min-resolution: .001dpcm) {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox20) {
+  @media all and (min--moz-device-pixel-ratio:0) { @media (min-width: 0px) {
+    .@{Selector} {
+      @Mixin();
+    }
+  } }
+  @media all and (-moz-images-in-menus:0) { @media (min-width: 0px) {
+    .@{Selector} {
+      @Mixin();
+    }
+  } }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox21) {
+  @media all and (min--moz-device-pixel-ratio:0) and (min-resolution: ~"3e1dpcm") {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @firefox22) {
+  @-moz-document url-prefix() {
+    .@{Selector} {
+      @Mixin();
+    }
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie1) {
+  .@{Selector}\ {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie2) {
+  *:first-child+html .@{Selector} {
+    @Mixin();
+  }
+  .@{Selector}, x:-IE7 {
+    @Mixin();
+  }
+  *+html .@{Selector} {
+    @Mixin();
+  }
+  body*.@{Selector} {
+    @Mixin();
+  }
+}
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie3) {
+//   html > /**/ body .@{Selector} {
+//     @Mixin();
+//   }
+//   head ~ /**/ body .@{Selector} {
+//     @Mixin();
+//   }
+// }
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie5) {
+  :root .@{Selector} {
+    @Mixin();
+  }
+  body:last-child .@{Selector} {
+    @Mixin();
+  }
+  body:nth-of-type(1) .@{Selector} {
+    @Mixin();
+  }
+  body:first-of-type .@{Selector} {
+    @Mixin();
+  }
+  .@{Selector}:not([attr*='']) {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie6) {
+  html[lang='\en'] .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie7) {
+  _:-ms-input-placeholder, :root .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie8) {
+  _:-ms-fullscreen, :root .@{Selector} {
+    @Mixin();
+  }
+}
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie9) {
+//   @media screen\9 { .@{Selector} {
+//     @Mixin();
+//   } }
+// }
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie10) {
+//   @media \0screen\,screen\9 { .@{Selector} {
+//     @Mixin();
+//   } }
+// }
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie11) {
+//   @media \0screen { .@{Selector} {
+//     @Mixin();
+//   } }
+// }
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie12) {
+//   @media screen and (min-width:0\0) { .@{Selector} {
+//     @Mixin();
+//   } }
+// }
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie13) {
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { .@{Selector} {
+    @Mixin();
+  } }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @ie14), (@BrowserSupport = @safari4) {
+  @media screen { @media (min-width: 0px) { .@{Selector} {
+    @Mixin();
+  } } }
+}
+
+// .BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @opera1), @BrowserSupport = @safari3) {
+//   *|html[xmlns*=""] .@{Selector} {
+//     @Mixin();
+//   }
+// }
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @opera2) {
+  html:first-child .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @opera3) {
+  _:-o-prefocus, body:last-child .@{Selector} {
+    @Mixin();
+  }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @opera4) {
+  @media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0) { .@{Selector} {
+    @Mixin();
+  } }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @opera4) {
+  @media (min-resolution: .001dpcm) { _:-o-prefocus, .@{Selector} {
+    @Mixin();
+  } }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @opera4) {
+  @media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) { .@{Selector} {
+    @Mixin();
+  } }
+}
+
+.BrowserSelect(@BrowserSupport, @Selector, @Mixin) when (@BrowserSupport = @safari2) {
+  html[xmlns*=""] body:last-child .@{Selector} {
+    @Mixin();
+  }
+  html[xmlns*=""]:root .@{Selector}  {
+    @Mixin();
+  }
+}

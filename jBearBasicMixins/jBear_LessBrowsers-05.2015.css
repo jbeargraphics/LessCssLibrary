@@ -17,4 +17,39 @@
  * I started to create a browserhacksheet based on http://browserhacks.com > might be useful for cross browser hacks
  * (but usage should be avoided if possible)
  *
+ * No Property/Value Hacks are added!
+ *
+ *
+ * How To Use?
+ * Select the BrowserHack that you need, choose a custom Css Selector (Only classes available for now),
+ * write your Style into a dummy class / mixin class, add the file to your project.
+ *
+ * Example:
+ * Selecting Firefox gt2 : @firefox2;
+ * Css Selector: .MySelector;
+ * Style: color: green;
+ * Additional Style: the class ".mixin"
+ *
+ * How To write the Less File:
+ * .mixin {
+ *    background: red;
+ * }
+ * .BrowserSelect(@firefox2, MySelector, { color: green; .mixin } );
+ *
+ * OUTPUT:
+ *
+ * .mixin {
+ *   background: red;
+ * }
+ * body:last-child .MySelector,
+ * x:-moz-any-link {
+ *   color: green;
+ *   background: red;
+ * }
+ *
+ * !!! IMPORTANT: DON'T Forget the curved brackets around the style!!!
+ *
+ * ANY QUESTIONS? CONTACT ME:
+ * TWITTER: @jbeargraphics
+ * FACEBOOK: https://www.facebook.com/jbeargraphics
  */
